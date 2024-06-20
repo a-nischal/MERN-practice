@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MERN Training Page</title>
+
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav>
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Services</a></li>
+            <!-- Add more navigation links as needed -->
+        </ul>
+    </nav>
+
+    <!-- Sidebar -->
+    <aside>
+        <h2>Recent Posts</h2>
+        <ul>
+            <li><a href="#">Post 1</a></li>
+            <li><a href="#">Post 2</a></li>
+            <a href="#">Baka here</a>
+            <!-- Add more blog post links here -->
+        </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main>
+        <h1>Welcome to MERN Training!</h1>
+        <p>This is the main content area where you can provide information about your training.</p>
+
+        <!-- Blog Section -->
+        <section>
+            <h2>Latest Blog Posts</h2>
+            <article>
+                <h3>Understanding MongoDB</h3>
+                <p>Learn how to work with MongoDB in your MERN stack applications.</p>
+            </article>
+            <article>
+                <h3>Building REST APIs with Express.js</h3>
+                <p>Explore the power of Express.js for creating APIs.</p>
+            </article>
+            <!-- Add more blog articles here -->
+        </section>
+
+        <!-- Contact Form -->
+        <section>
+            <h2>Contact Us</h2>
+            <form action="/submit" method="post">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+                <textarea id="message" name="message" rows="4" placeholder="Your message"></textarea>
+                <button type="submit">Submit</button>
+            </form>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 MERN Training. All rights reserved.</p>
+    </footer>
+    <script src="function.js"></script>
+</body>
+</html>

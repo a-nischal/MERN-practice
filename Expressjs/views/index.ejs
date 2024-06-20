@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Malevolent Shrine</title>
+  </head>
+  <body>
+    <form action="/todo" method="post">
+      <input type="text" name="todo" />
+      <input type="submit" value="add" />
+    </form>
+    <% todos.forEach((todo) => { %>
+    <li>
+      <%= todo.title %>
+      <form action="/todo/delete/<%= todo._id %>" method="post">
+        <button type="submit">Delete</button>
+      </form>
+      <form action="/todo/edit/<%= todo._id %>" method="get">
+        <button type="submit">Update</button>
+      </form>
+    </li>
+    <% }) %>
+  </body>
+</html>

@@ -1,0 +1,31 @@
+.btn{
+    border-radius: 5px ;
+    padding: 5px 9px;
+    font-size: small;
+}
+
+.btn-outline-primary{
+    color: red;
+    background: none;
+    border-color: blue;
+    
+    
+}.btn-danger{
+    background-color: red   ;
+}
+.btn-dark{
+    background-color: black;
+    color: white;
+}
+.btn-secondary{
+    background-color: grey;
+}
+
+.btn-light{
+    background-color: white;
+    
+}
+.btn-success{
+    background-color: green;
+}
+
