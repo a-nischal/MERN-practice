@@ -1,5 +1,6 @@
 const express = require("express");
 require("express-async-errors");
+const { query, validationResult } = require("express-validator")
 const connectDb = require("./express-todo/config/db");
 const todoRoutes = require("./routes/todo.route");
 const todoViewRoutes = require("./routes/todo.view.route");
@@ -15,6 +16,18 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 connectDb();
+
+// => /hello?person=sirish
+app.get('/hello', query('person').notEmpty(), (req, res) => {
+  const reqWithErrors = validationResult(req);
+  console.log(reqWithErrors.array())
+  if (reqWithErrors.array().length === 0) {
+    return res.send(`Hello, ${req.query.person}!`);
+  }
+
+  res.send({ errors: reqWithErrors.array() });
+});
+
 
 app.use("/api/todos", todoRoutes);
 app.use("/view/todo", todoViewRoutes);
