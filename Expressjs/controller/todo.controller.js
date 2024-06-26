@@ -8,7 +8,6 @@ const getTodos = async (req, res) => {
   });
 };
 
-//test 123
 const getTodo = async (req, res) => {
   const { id: _id } = req.params;
   const{ id : user } = req.user;
