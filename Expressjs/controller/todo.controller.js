@@ -1,8 +1,8 @@
+const NotFoundError = require("../errors/not-found.error");
 const Todo = require("../model/Todo");
-const NotFoundError = require("../errors/custom.error");
-const getTodos = async (req, res) => {
 
-  const todos = await Todo.find();
+const getTodos = async (req, res) => {
+  const todos = await Todo.find({ user: req.user.id });
   res.json({
     data: todos,
   });
@@ -10,8 +10,9 @@ const getTodos = async (req, res) => {
 
 const getTodo = async (req, res) => {
   const { id: _id } = req.params;
-  const{ id : user } = req.user;
-  const todo = await Todo.findOne({ _id , user });
+  const { id: user } = req.user;
+  const todo = await Todo.findOne({ _id, user });
+  if (!todo) throw new NotFoundError("Todo not found.");
   res.json({
     data: todo,
   });
@@ -19,8 +20,8 @@ const getTodo = async (req, res) => {
 
 const createTodo = async (req, res) => {
   const { title } = req.body;
-  const { user } = req.user;
-  await Todo.create({ title, user });
+  console.log(req.file);
+  await Todo.create({ title, user: req.user.id, image: req.file.path });
   res.json({
     message: "Todo successfully added.",
   });
@@ -28,8 +29,9 @@ const createTodo = async (req, res) => {
 
 const deleteTodo = async (req, res) => {
   const { id: _id } = req.params;
-  const { id : user} = req.user;
-  await Todo.deleteOne({ _id , user });
+  const { id: user } = req.user;
+
+  await Todo.deleteOne({ _id, user });
   res.json({
     message: "Todo deleted successfully.",
   });
@@ -38,8 +40,9 @@ const deleteTodo = async (req, res) => {
 const updateTodo = async (req, res) => {
   const { title } = req.body;
   const { id: _id } = req.params;
-  const { id : user } = req.user;
-  await Todo.updateOne({ _id , title , user });
+  const { id: user } = req.user;
+
+  await Todo.updateOne({ _id, user }, { title });
   res.json({
     message: "Todo edited successfully",
   });

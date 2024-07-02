@@ -1,44 +1,37 @@
 const jwt = require("jsonwebtoken");
 const User = require("../model/User");
-const bcrypt = require("bcryptjs")
-const { signUpService } = require("../services/auth.services.js")
-const UnauthorizedError = require ("../errors/Un-authorized.error.js")
+const bcrypt = require("bcryptjs");
+const authService = require("../services/auth.services.js");
+const UnAuthorizedError = require("../errors/Un-authorized.error.js");
+const { secretKey } = require("../express-todo/config/constants.js");
 
 // Secret key for signing the token
-const secretKey = "WIolrgLYgeOX8YfrFENHVEd3jWbasMAC";
-
-
 const signUp = async (req, res) => {
-  await signUpService(req.body);
+  await authService.signUp(req.body);
   res.json({
     message: "User successfully signed up.",
   });
 };
 
-
-
-
 const signIn = async (req, res) => {
   const { email, password } = req.body;
-
   const user = await User.findOne({ email });
   if (!user) {
-    throw new UnauthorizedError("Email or password invalid.")
-    };
-    
-  
-  const validpassword = bcrypt.compareSync(password,user.password);
-  console.log(validpassword);
+    throw new UnAuthorizedError("Email or password is incorrect.");
+  }
 
-  if(!validpassword){
-    throw new UnauthorizedError("Invalid Password.")
-    };
-  
+  // plain password, hashed password
+  const validPassword = bcrypt.compareSync(password, user.password);
+
+  if (!validPassword) {
+    throw new UnAuthorizedError("Invalid Credentials.");
+  }
 
   const token = jwt.sign({ id: user._id, email: user.email }, secretKey, {
     expiresIn: "1d",
   });
 
+  token.value;
   res.json({
     message: "User successfully signed in.",
     token,
@@ -48,5 +41,4 @@ const signIn = async (req, res) => {
 module.exports = {
   signIn,
   signUp,
-  secretKey
 };

@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const { body, validationResult } = require("express-validator");
 const {
   getTodo,
   getTodos,
@@ -8,11 +9,20 @@ const {
   createTodo,
 } = require("../controller/todo.controller");
 const authenticate = require("../middleware/middleware.todo");
+const { validator } = require("../middleware/validtor.middleware");
+const upload = require("../express-todo/config/multer");
 
-router.get("/",authenticate, getTodos);
-router.get("/:id",authenticate, getTodo);
-router.post("/",authenticate, createTodo);
-router.delete("/:id",authenticate, deleteTodo);
-router.patch("/:id",authenticate, updateTodo);
+router.get("/", authenticate, getTodos);
+router.get("/:id", authenticate, getTodo);
+router.post(
+  "/",
+  authenticate,
+  upload.single("image"),
+  body("title").notEmpty(),
+  validator,
+  createTodo
+);
+router.delete("/:id", authenticate, deleteTodo);
+router.patch("/:id", authenticate, updateTodo);
 
-module.exports=router;
+module.exports = router;
