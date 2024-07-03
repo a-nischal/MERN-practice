@@ -10,7 +10,7 @@ const {
 } = require("../controller/todo.controller");
 const authenticate = require("../middleware/middleware.todo");
 const { validator } = require("../middleware/validtor.middleware");
-const upload = require("../express-todo/config/multer");
+const upload = require("../config/multer");
 
 router.get("/", authenticate, getTodos);
 router.get("/:id", authenticate, getTodo);

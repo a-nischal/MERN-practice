@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const { secretKey } = require("../express-todo/config/constants");
+const { secretKey } = require("../config/constants");
 const UnAuthorizedError = require("../errors/Un-authorized.error");
 
 const authenticate = (req, res, next) => {

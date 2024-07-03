@@ -3,7 +3,7 @@ const User = require("../model/User");
 const bcrypt = require("bcryptjs");
 const authService = require("../services/auth.services.js");
 const UnAuthorizedError = require("../errors/Un-authorized.error.js");
-const { secretKey } = require("../express-todo/config/constants.js");
+const { secretKey } = require("../config/constants.js");
 
 // Secret key for signing the token
 const signUp = async (req, res) => {

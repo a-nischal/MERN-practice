@@ -1,7 +1,7 @@
 const express = require("express");
 require("express-async-errors");
 const { query, validationResult } = require("express-validator");
-const connectDb = require("./express-todo/config/db");
+const connectDb = require("./config/db");
 const todoRoutes = require("./routes/todo.route");
 const todoViewRoutes = require("./routes/todo.view.route");
 const authRoutes = require("./routes/auth.route");
