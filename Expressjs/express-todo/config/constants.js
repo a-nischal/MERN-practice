@@ -1,4 +1,4 @@
-const secretKey = "WIolrgLYgeOX8YfrFENHVEd3jWbasMAC"; // load from .env
+const secretKey =process.env.SECRET_KEY ; // load from .env
 module.exports = {
   secretKey,
 };
