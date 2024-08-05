@@ -1,8 +1,8 @@
 const jwt = require("jsonwebtoken");
-const User = require("../model/User");
+const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const authService = require("../services/auth.services.js");
-const UnAuthorizedError = require("../errors/Un-authorized.error.js");
+const UnAuthorizedError = require("../errors/un-authorized.js");
 const { secretKey } = require("../config/constants.js");
 
 // Secret key for signing the token
@@ -27,14 +27,21 @@ const signIn = async (req, res) => {
     throw new UnAuthorizedError("Invalid Credentials.");
   }
 
-  const token = jwt.sign({ id: user._id, email: user.email }, secretKey, {
-    expiresIn: "10d",
+  const token = jwt.sign(
+    { id: user._id, email: user.email, roles: user.roles },
+    secretKey,
+    {
+      expiresIn: "10d",
+    }
+  );
+
+  res.cookie("token", token, {
+    httpOnly: true,
   });
 
-  token.value;
   res.json({
     message: "User successfully signed in.",
-    token,
+    user,
   });
 };
 
