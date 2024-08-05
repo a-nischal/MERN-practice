@@ -5,10 +5,24 @@ const connectDb = require("./config/db");
 const todoRoutes = require("./routes/todo.route");
 const todoViewRoutes = require("./routes/todo.view.route");
 const authRoutes = require("./routes/auth.route");
+const adminRoutes = require("./routes/admin.route");
 const NotFoundError = require("./errors/not-found.error");
 const CustomError = require("./errors/custom.error");
-const path = require("path");
 const app = express();
+const cors = require("cors");
+
+const allowlist = ["http://localhost:5173"];
+const corsOptionsDelegate = function (req, callback) {
+  let corsOptions;
+  if (allowlist.indexOf(req.header("Origin")) !== -1) {
+    corsOptions = { origin: true }; // reflect (enable) the requested origin in the CORS response
+  } else {
+    corsOptions = { origin: false }; // disable CORS for this request
+  }
+  callback(null, corsOptions); // callback expects two parameters: error and options
+};
+
+app.use(cors(corsOptionsDelegate));
 
 app.set("view engine", "ejs");
 
@@ -34,6 +48,7 @@ app.get("/test", query("search").notEmpty(), (req, res) => {
 app.use("/api/todos", todoRoutes);
 app.use("/view/todo", todoViewRoutes);
 app.use("/api/auth", authRoutes);
+app.use("/api/admin", adminRoutes);
 
 app.all("*", (req, res) => {
   throw new NotFoundError("Route not found.");
