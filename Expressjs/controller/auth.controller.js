@@ -27,6 +27,9 @@ const signIn = async (req, res) => {
     throw new UnAuthorizedError("Invalid Credentials.");
   }
 
+  const expiresAt = new Date();
+  expiresAt.setDate(expiresAt.getDate() + 10);
+
   const token = jwt.sign(
     { id: user._id, email: user.email, roles: user.roles },
     secretKey,
@@ -37,11 +40,13 @@ const signIn = async (req, res) => {
 
   res.cookie("token", token, {
     httpOnly: true,
+    expires: expiresAt,
   });
 
   res.json({
     message: "User successfully signed in.",
     user,
+    expiresAt,
   });
 };
 

@@ -1,8 +1,8 @@
 const NotFoundError = require("../errors/not-found.error");
-const Todo = require("../model/Todo");
+const Todo = require("../models/Todo");
 
 const getTodos = async (req, res) => {
-  const { search, limit, page, status } = req.query;
+  const { search, limit = 10, page = 1, status, sortBy, sortOrder } = req.query;
   const regex = new RegExp(search);
   console.log({ status });
   const filter = {
@@ -15,6 +15,9 @@ const getTodos = async (req, res) => {
   }
 
   const todos = await Todo.find(filter)
+    .sort({
+      [sortBy]: sortOrder, // { price: asc} //{ createdAt: desc}
+    })
     .limit(limit)
     .skip((page - 1) * limit);
 
