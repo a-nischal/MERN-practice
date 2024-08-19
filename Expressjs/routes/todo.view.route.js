@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const Todo = require("../model/Todo");
+const Todo = require("../models/Todo");
 
 // Index Page
 router.get("/", async (req, res) => {
